@@ -10,8 +10,9 @@ from .models import DownTime, UpTime, Website
 
 
 @shared_task
-def check_website_status(website_id):
-    website = Website.objects.get(pk=website_id)
+def check_website_status(website_ids):
+    for website_id in website_ids:
+        website = Website.objects.get(id=website_id)
     try:
         response = requests.get(website.url, headers=website.authorization)
         if response.status_code == 200:
@@ -61,7 +62,7 @@ def check_website_status(website_id):
             DownTime.objects.create(website=website, start_time=datetime.datetime.now(), reason=str(e))
 
 
-@app.add_periodic_task(run_every=crontab(minute="*"))
-def check_website_status_periodic():
-    for website in Website.objects.all():
-        check_website_status.delay(website.id)
+@app.task
+def check_all_websites_status():
+    website_ids = Website.objects.values_list("id", flat=True)
+    check_website_status.delay(website_ids)

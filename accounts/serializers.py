@@ -11,8 +11,8 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class UserLoginSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(max_length=25)
-    username = serializers.CharField(max_length=25)
+    username = serializers.CharField(max_length=20, min_length=2)
+    password = serializers.CharField(max_length=30, min_length=6, write_only=True)
 
     class Meta:
         model = CustomUser
@@ -22,12 +22,10 @@ class UserLoginSerializer(serializers.ModelSerializer):
 class UserRegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ("id", "username", "email", "password")
+        fields = ("username", "email", "password")
         extra_kwargs = {"password": {"write_only": True}}
 
-        def create(self, validated_data):
-            user = CustomUser.objects.create_user(
-                validated_data["username"], validated_data["email"], validated_data["password"]
-            )
+    def create(self, validated_data):
+        user = CustomUser.objects.create_user(**validated_data)
 
-            return user
+        return user

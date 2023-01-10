@@ -136,14 +136,16 @@ SWAGGER_SETTINGS = {
 # REST framework settings
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": ("knox.auth.TokenAuthentication",),
+    "NON_FIELD_ERRORS_KEY": "error",
 }
+
 
 # CELERY SETTINGS
 CELERY_BROKER_URL = "redis://localhost:6379"
 CELERY_RESULT_BACKEND = "redis://localhost:6379"
 CELERY_BEAT_SCHEDULE = {
-    "check-website-status": {
-        "task": "tracker.tasks.check_website_status",
-        "schedule": crontab(minute="*/1"),
+    "check-all-websites-status": {
+        "task": "tracker.tasks.check_all_websites_status",
+        "schedule": crontab(),
     },
 }

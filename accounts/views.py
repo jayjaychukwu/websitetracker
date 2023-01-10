@@ -21,14 +21,14 @@ class RegisterAPIView(generics.GenericAPIView):
         return Response(
             {
                 "user": UserSerializer(user, context=self.get_serializer_context()).data,
-                "token": AuthToken.objects.create(user=user)[1],
+                "token": AuthToken.objects.create(user)[1],
             }
         )
 
 
 # Login API VIew
 class LoginAPIView(KnoxLoginView):
-    serializer = UserLoginSerializer
+    serializer_class = UserLoginSerializer
     permission_classes = (permissions.AllowAny,)
 
     @swagger_auto_schema(request_body=UserLoginSerializer)
