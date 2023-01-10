@@ -29,7 +29,11 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # 3rd party
     "rest_framework",
-    "django_celery_beat",
+    "knox",
+    "drf_yasg",
+    # Local apps
+    "tracker",
+    "accounts",
 ]
 
 MIDDLEWARE = [
@@ -115,6 +119,24 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+# User model
+AUTH_USER_MODEL = "accounts.CustomUser"
+
+# Swagger docs settings
+SWAGGER_SETTINGS = {
+    "SECURITY_DEFINITIONS": {
+        "Auth Token eg [Token (JWT)]": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header",
+        }
+    }
+}
+
+# REST framework settings
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": ("knox.auth.TokenAuthentication",),
+}
 
 # CELERY SETTINGS
 CELERY_BROKER_URL = "redis://localhost:6379"
