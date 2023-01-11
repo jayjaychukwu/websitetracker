@@ -11,15 +11,15 @@ class Website(models.Model):
 class UpTime(models.Model):
     website = models.ForeignKey(to=Website, on_delete=models.CASCADE)
     start_time = models.DateTimeField()
-    end_time = models.DateTimeField(null=True)
-    duration = models.DurationField()
+    end_time = models.DateTimeField(null=True, blank=True)
+    duration = models.DurationField(null=True, blank=True)
 
 
 class DownTime(models.Model):
     website = models.ForeignKey(to=Website, on_delete=models.CASCADE)
     start_time = models.DateTimeField()
-    end_time = models.DateTimeField(null=True)
-    reason = models.TextField(null=True)
+    end_time = models.DateTimeField(null=True, blank=True)
+    reason = models.TextField(null=True, blank=True)
 
 
 class EmailDetails(models.Model):

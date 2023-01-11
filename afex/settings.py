@@ -143,7 +143,7 @@ REST_FRAMEWORK = {
 # CELERY SETTINGS
 CELERY_BROKER_URL = "redis://localhost:6379"
 CELERY_RESULT_BACKEND = "redis://localhost:6379"
-CELERY_BEAT_SCHEDULE = {
+CELERYBEAT_SCHEDULE = {
     "check-all-websites-status": {
         "task": "tracker.tasks.check_all_websites_status",
         "schedule": crontab(),
