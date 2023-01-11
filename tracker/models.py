@@ -1,10 +1,14 @@
 from django.db import models
 
 from accounts.models import CustomUser
+from tracker.choices import AuthorizationType
 
 
 class Website(models.Model):
     url = models.URLField()
+    authorization_type = models.CharField(
+        max_length=50, choices=AuthorizationType.choices, default=AuthorizationType.NONE
+    )
     authorization = models.TextField(null=True, default=None)
 
 
