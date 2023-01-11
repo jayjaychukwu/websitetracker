@@ -1,7 +1,7 @@
 # websitetracker
 A website up and down time tracker with multiple features and functionalities
 
-The aim is to have a background worker that runs a task every minute that call a background task function that checks if all the websites in the database are up and relays that information in a predefined way back to the database.
+The aim is to have a background worker that runs a task, A, to give another task, B, all the websites in the database. Task B then checks if the websites are up and relays that information in a predefined way back to the database.
 
 It is an API that allows you do the following:
 1. Register an account and login
